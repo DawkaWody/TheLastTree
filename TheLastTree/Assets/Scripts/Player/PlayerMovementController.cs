@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInputHandler))]
+[RequireComponent(typeof(PlayerAnimationController))]
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
@@ -11,12 +12,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private PlayerInputHandler _inputHandler;
+    private PlayerAnimationController _animationController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<PlayerInputHandler>();
+        _animationController = GetComponent<PlayerAnimationController>();
 
         _facingRight = true;
     }
@@ -27,6 +30,7 @@ public class PlayerMovementController : MonoBehaviour
         _moveInput = _inputHandler.MoveInput.normalized;
         _rigidbody.linearVelocity = new Vector2(_moveInput.x, _moveInput.y) * _speed;
 
+        _animationController.AnimateMovement(_moveInput);
         TurnCheck();
     }
 
