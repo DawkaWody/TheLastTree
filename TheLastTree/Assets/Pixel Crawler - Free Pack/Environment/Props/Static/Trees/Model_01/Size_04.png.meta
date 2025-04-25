@@ -70,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -84,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,7 +108,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -188,10 +188,10 @@ TextureImporter:
       name: Size_04_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 127
-        width: 75
-        height: 128
+        x: 3
+        y: 128
+        width: 73
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +210,10 @@ TextureImporter:
       name: Size_04_1
       rect:
         serializedVersion: 2
-        x: 82
-        y: 127
-        width: 75
-        height: 128
+        x: 83
+        y: 128
+        width: 73
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +232,10 @@ TextureImporter:
       name: Size_04_2
       rect:
         serializedVersion: 2
-        x: 165
-        y: 127
-        width: 71
-        height: 128
+        x: 166
+        y: 128
+        width: 69
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: Size_04_3
       rect:
         serializedVersion: 2
-        x: 245
-        y: 127
-        width: 71
-        height: 128
+        x: 246
+        y: 128
+        width: 69
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +276,10 @@ TextureImporter:
       name: Size_04_4
       rect:
         serializedVersion: 2
-        x: 327
-        y: 223
-        width: 30
-        height: 25
+        x: 328
+        y: 224
+        width: 28
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,10 +298,10 @@ TextureImporter:
       name: Size_04_5
       rect:
         serializedVersion: 2
-        x: 327
-        y: 191
-        width: 30
-        height: 25
+        x: 328
+        y: 192
+        width: 28
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +320,10 @@ TextureImporter:
       name: Size_04_6
       rect:
         serializedVersion: 2
-        x: 327
-        y: 159
-        width: 30
-        height: 25
+        x: 328
+        y: 160
+        width: 28
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,10 +342,10 @@ TextureImporter:
       name: Size_04_7
       rect:
         serializedVersion: 2
-        x: 2
-        y: 0
-        width: 75
-        height: 127
+        x: 325
+        y: 128
+        width: 33
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,10 +364,10 @@ TextureImporter:
       name: Size_04_8
       rect:
         serializedVersion: 2
-        x: 82
+        x: 3
         y: 0
-        width: 75
-        height: 127
+        width: 73
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -386,10 +386,10 @@ TextureImporter:
       name: Size_04_9
       rect:
         serializedVersion: 2
-        x: 165
+        x: 83
         y: 0
-        width: 71
-        height: 127
+        width: 73
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -408,10 +408,10 @@ TextureImporter:
       name: Size_04_10
       rect:
         serializedVersion: 2
-        x: 245
+        x: 166
         y: 0
-        width: 71
-        height: 127
+        width: 69
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -430,10 +430,10 @@ TextureImporter:
       name: Size_04_11
       rect:
         serializedVersion: 2
-        x: 324
-        y: 127
-        width: 35
-        height: 25
+        x: 246
+        y: 0
+        width: 69
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -452,7 +452,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ea41dd94bcc04794a94f9e3a93212cee
     internalID: 0
     vertices: []
     indices: 
@@ -461,7 +461,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Size_04_0: -6489005286283933747
+      Size_04_1: 4487715507037981956
+      Size_04_10: 783352787174785366
+      Size_04_11: 4142895718660784650
+      Size_04_2: -2553979770882190585
+      Size_04_3: -3266727112821130387
+      Size_04_4: 4680988772171306770
+      Size_04_5: 2012907283896832265
+      Size_04_6: -30606100684883132
+      Size_04_7: 7938849067235106849
+      Size_04_8: -1378059970512556902
+      Size_04_9: 5148204208854287770
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
