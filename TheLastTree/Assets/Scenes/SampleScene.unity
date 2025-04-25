@@ -409,6 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveActionName: Move
+  _attackActionName: Attack
   _interactActionName: Interact
 --- !u!114 &638030644
 MonoBehaviour:
