@@ -2959,6 +2959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentPlayerHealth: 0
+  healthFillImage: {fileID: 1500498154}
 --- !u!1 &1029507894
 GameObject:
   m_ObjectHideFlags: 0
@@ -73202,8 +73203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -970, y: 400}
-  m_SizeDelta: {x: 50, y: 10}
+  m_AnchoredPosition: {x: -962, y: 400}
+  m_SizeDelta: {x: 47, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1500498154
 MonoBehaviour:
