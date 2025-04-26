@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public static MapGenerator Instance { get; private set; }
+
     [SerializeField] private Transform _topLeft;
     [SerializeField] private Transform _bottomRight;
     [SerializeField] private Segment[] _segments;
@@ -14,6 +16,14 @@ public class MapGenerator : MonoBehaviour
     private int _mapWidth;
     private int _mapHeight;
     private bool _seg0Spawned;
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
