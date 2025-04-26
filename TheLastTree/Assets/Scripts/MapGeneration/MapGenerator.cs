@@ -47,8 +47,10 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        Vector2 startPos = new Vector2(_topLeftPos.x + _segmentWidth / 2, _topLeftPos.y - _segmentHeight / 2);
-        Vector2 endPos = new Vector2(_bottomRightPos.x - _segmentWidth / 2, _bottomRightPos.y + _segmentHeight / 2);
+        if (_mapContainer.childCount > 0) ClearMap();
+
+        Vector2 startPos = new(_topLeftPos.x + _segmentWidth / 2, _topLeftPos.y - _segmentHeight / 2);
+        Vector2 endPos = new(_bottomRightPos.x - _segmentWidth / 2, _bottomRightPos.y + _segmentHeight / 2);
 
         for (int y = (int) startPos.y; y >= endPos.y; y -= _segmentHeight)
         {
@@ -70,6 +72,14 @@ public class MapGenerator : MonoBehaviour
         if (segId == 0)
         {
             _seg0Spawned = true;
+        }
+    }
+
+    private void ClearMap()
+    {
+        foreach (Transform segment in _mapContainer)
+        {
+            Destroy(segment.gameObject);
         }
     }
 }

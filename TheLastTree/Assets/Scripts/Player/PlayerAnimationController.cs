@@ -34,6 +34,11 @@ public class PlayerAnimationController : MonoBehaviour
         _animator.SetTrigger("attack");
     }
 
+    public void AnimateWatering()
+    {
+        _animator.SetTrigger("water");
+    }
+
     public void AnimateDeath()
     {
         _animator.SetTrigger("die");
