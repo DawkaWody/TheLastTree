@@ -857,6 +857,7 @@ MonoBehaviour:
   _decorationVariants:
   - {fileID: 237101422938586811}
   - {fileID: 1566911428818249119}
+  _isSegment0: 1
 --- !u!1 &1186555847702859659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,11 +1168,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5991411732697166392}
   - component: {fileID: 6312084638573666542}
+  - component: {fileID: 7631330077321107489}
   - component: {fileID: 5733996629635383349}
   - component: {fileID: 7137841908051123386}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MainTree
-  m_TagString: Untagged
+  m_TagString: MainTree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1246,6 +1248,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &7631330077321107489
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471758227113745335}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.0625, y: 4}
+  m_Direction: 0
 --- !u!114 &5733996629635383349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,6 +1322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 0
   height: 0
+  _offset: {x: 0, y: 0}
   _alphaOnFade: 0.3
 --- !u!1 &2502097981876867868
 GameObject:

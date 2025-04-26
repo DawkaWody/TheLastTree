@@ -59,14 +59,18 @@ public class MapGenerator : MonoBehaviour
                 GenerateSegment(x, y);
             }
         }
-        
+
+        if (!_seg0Spawned)
+        {
+            Debug.Log("Segment 0 didn't generate. Regenerating the map");
+            GenerateMap();
+        }
     }
 
     private void GenerateSegment(float x, float y)
     {
         int segId = Random.Range(_seg0Spawned ? 1 : 0, _segments.Length);
-        Segment segment = Instantiate(_segments[segId], new Vector3(x, y, 0), Quaternion.identity);
-        segment.transform.SetParent(_mapContainer);
+        Segment segment = Instantiate(_segments[segId], new Vector3(x, y, 0), Quaternion.identity, _mapContainer);
         segment.Decorate();
 
         if (segId == 0)
@@ -77,6 +81,7 @@ public class MapGenerator : MonoBehaviour
 
     private void ClearMap()
     {
+        _seg0Spawned = false;
         foreach (Transform segment in _mapContainer)
         {
             Destroy(segment.gameObject);
