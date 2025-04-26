@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(TreeDeco))]
 public class MainTree : MonoBehaviour
 {
     [SerializeField] private float _maxHealth = 200f;
@@ -11,6 +12,7 @@ public class MainTree : MonoBehaviour
     [SerializeField] private float _dehydrationRate = 3f;
     [SerializeField] private float _growTime = 5f;
     [SerializeField] private Sprite[] _growthStages;
+    [SerializeField] private float[,] _growthDimensions;
 
     private float _health;
     private float _watering;
@@ -21,15 +23,18 @@ public class MainTree : MonoBehaviour
     private float _dehydrationTimer;
 
     private SpriteRenderer _spriteRenderer;
+    private TreeDeco _treeDeco;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _treeDeco = GetComponent<TreeDeco>();
 
         _health = _maxHealth;
         _watering = _maxWatering;
         _growth = 0;
+        _growthDimensions = new float[,] { {0, 0}, {1, 2}, {2, 4} };
     }
 
     // Update is called once per frame
@@ -75,6 +80,8 @@ public class MainTree : MonoBehaviour
         if (_growth >= _growthStages.Length - 1) return;
         _growth++;
         _spriteRenderer.sprite = _growthStages[_growth];
+        _treeDeco.width = _growthDimensions[_growth, 0];
+        _treeDeco.height = _growthDimensions[_growth, 1];
     }
 
     public void Damage(float amount)

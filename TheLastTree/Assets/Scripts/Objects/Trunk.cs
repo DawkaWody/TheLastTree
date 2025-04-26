@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class LeafPad : MonoBehaviour
+[RequireComponent(typeof(SpriteRenderer))]
+public class Trunk : MonoBehaviour
 {
     [SerializeField] Sprite _idle;
     [SerializeField] Sprite _selected;
-    [SerializeField] Sprite _using;
+    //[SerializeField] Sprite _using;
 
+    [SerializeField] private GameObject treeSap;
     [SerializeField] float _offsetY;
 
     private SpriteRenderer _spriteRenderer;
@@ -15,6 +17,7 @@ public class LeafPad : MonoBehaviour
 
     private bool isActive = false;
     private bool isBeingUsed = false;
+    private bool isInteractable = true;
 
     private Vector3 Offset;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,12 +39,12 @@ public class LeafPad : MonoBehaviour
 
         if (isBeingUsed && _playerTransform != null)
         {
-            transform.position = _playerTransform.position + Offset;
+            //transform.position = _playerTransform.position + Offset;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && isInteractable)
         {
             _spriteRenderer.sprite = _selected;
             isActive = true;
@@ -62,7 +65,9 @@ public class LeafPad : MonoBehaviour
     }
     void Use()
     {
-        _spriteRenderer.sprite = _using;
+        _spriteRenderer.sprite = _idle;
+        Instantiate(treeSap, _playerTransform.position + Offset, Quaternion.identity, _playerTransform);
         isBeingUsed = true;
+        isInteractable = false;
     }
 }
