@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
     }
 
-    private void GenerateMap()
+    public void GenerateMap()
     {
         Vector2 startPos = new Vector2(_topLeftPos.x + _segmentWidth / 2, _topLeftPos.y - _segmentHeight / 2);
         Vector2 endPos = new Vector2(_bottomRightPos.x - _segmentWidth / 2, _bottomRightPos.y + _segmentHeight / 2);
