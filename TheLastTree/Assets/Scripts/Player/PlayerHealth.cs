@@ -1,0 +1,34 @@
+using UnityEngine;
+
+public class PlayerHealth : MonoBehaviour
+{
+    [SerializeField] private int maxHealth = 100;
+    public int currentPlayerHealth;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        currentPlayerHealth = maxHealth;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentPlayerHealth -= amount;
+        currentPlayerHealth = Mathf.Max(currentPlayerHealth, 0);
+        if (currentPlayerHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        currentPlayerHealth += amount;
+        currentPlayerHealth = Mathf.Min(currentPlayerHealth, maxHealth);
+    }
+
+    void Die()
+    {
+        Debug.Log("u ded.");
+    }
+}

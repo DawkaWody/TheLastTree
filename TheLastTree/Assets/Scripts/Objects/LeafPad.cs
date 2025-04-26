@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class LeafPad : MonoBehaviour
 {
+    public ItemType itemType;
     [SerializeField] Sprite _idle;
     [SerializeField] Sprite _selected;
     [SerializeField] Sprite _using;
@@ -11,6 +12,7 @@ public class LeafPad : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private PlayerInputHandler _inputHandler;
+    private PlayerInventory _playerInventory;
 
     private Transform _playerTransform;
 
@@ -31,8 +33,15 @@ public class LeafPad : MonoBehaviour
     {
         if (_inputHandler != null && _inputHandler.InteractWasPressed && isActive)
         {
-            Use();
-            //_animationController.AnimateAttack();
+            var inventory = _playerInventory;
+            if (inventory != null)
+            {
+                if (inventory.CanPickUp(itemType))
+                {
+                    inventory.PickUpItem(itemType);
+                    Use();
+                }
+            }
         }
 
         if (isBeingUsed && _playerTransform != null)
@@ -48,6 +57,7 @@ public class LeafPad : MonoBehaviour
             isActive = true;
             _playerTransform = collision.transform;
             _inputHandler = collision.GetComponent<PlayerInputHandler>();
+            _playerInventory = collision.GetComponent<PlayerInventory>();
         }
     }
 

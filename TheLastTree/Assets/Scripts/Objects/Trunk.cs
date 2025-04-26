@@ -3,20 +3,20 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Trunk : MonoBehaviour
 {
+    public ItemType itemType;
     [SerializeField] Sprite _idle;
     [SerializeField] Sprite _selected;
-    //[SerializeField] Sprite _using;
 
     [SerializeField] private GameObject treeSap;
     [SerializeField] float _offsetY;
 
     private SpriteRenderer _spriteRenderer;
     private PlayerInputHandler _inputHandler;
+    private PlayerInventory _playerInventory;
 
     private Transform _playerTransform;
 
     private bool isActive = false;
-    private bool isBeingUsed = false;
     private bool isInteractable = true;
 
     private Vector3 Offset;
@@ -33,13 +33,15 @@ public class Trunk : MonoBehaviour
     {
         if (_inputHandler != null && _inputHandler.InteractWasPressed && isActive)
         {
-            Use();
-            //_animationController.AnimateAttack();
-        }
-
-        if (isBeingUsed && _playerTransform != null)
-        {
-            //transform.position = _playerTransform.position + Offset;
+            var inventory = _playerInventory;
+            if (inventory != null)
+            {
+                if (inventory.CanPickUp(itemType))
+                {
+                    inventory.PickUpItem(itemType);
+                    Use();
+                }
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -50,6 +52,7 @@ public class Trunk : MonoBehaviour
             isActive = true;
             _playerTransform = collision.transform;
             _inputHandler = collision.GetComponent<PlayerInputHandler>();
+            _playerInventory = collision.GetComponent<PlayerInventory>();
         }
     }
 
@@ -67,7 +70,6 @@ public class Trunk : MonoBehaviour
     {
         _spriteRenderer.sprite = _idle;
         Instantiate(treeSap, _playerTransform.position + Offset, Quaternion.identity, _playerTransform);
-        isBeingUsed = true;
         isInteractable = false;
     }
 }
