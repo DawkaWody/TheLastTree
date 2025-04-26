@@ -8,16 +8,21 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] private Image healthFillImage;
 
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private float flashDuration;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentPlayerHealth = maxHealth;
+        playerSprite.material = new Material(Shader.Find("Custom/2DFlash"));
     }
 
     public void TakeDamage(int amount)
     {
         currentPlayerHealth -= amount;
         currentPlayerHealth = Mathf.Max(currentPlayerHealth, 0);
+        StartCoroutine(Flash());
         UpdateHealthBar();
         if (currentPlayerHealth <= 0)
         {
@@ -41,5 +46,12 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("u ded.");
+    }
+    private IEnumerator Flash()
+    {
+        Material mat = playerSprite.material;
+        mat.SetFloat("_FlashAmount", 1f);
+        yield return new WaitForSeconds(flashDuration);
+        mat.SetFloat("_FlashAmount", 0f);
     }
 }
