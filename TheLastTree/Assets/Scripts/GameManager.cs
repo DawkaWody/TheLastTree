@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Camera _camera;
     public static GameManager Instance;
     private PlayerHealth _playerHealth;
 
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float damageInterval;
     [SerializeField] private int _rainDamage;
+
+    [SerializeField] private ParticleSystem rainParticles;
+
+    private GameObject rainEffect;
     void Awake()
     {
         if (Instance == null)
@@ -38,12 +43,6 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void StartGame()
     {
         if (MapGenerator.Instance != null)
@@ -57,12 +56,21 @@ public class GameManager : MonoBehaviour
     {
         int timeBefore = Random.Range(_timeBeforeMin, _timeBeforeMax);
         int duration = Random.Range(_durationMin, _durationMax);
+
         yield return new WaitForSeconds(timeBefore - 5);
         Debug.Log("close");
+
         // signal for storm
         yield return new WaitForSeconds(afterSignal);
         Debug.Log("rain");
+
         // apply rain effects
+        Quaternion rotation = Quaternion.Euler(0f, 0f, -25f);
+        rainEffect = Instantiate(rainParticles.gameObject, _camera.transform.position + new Vector3(2, 12, 25), rotation, _camera.transform);
+
+        ParticleSystem ps = rainEffect.GetComponent<ParticleSystem>();
+        ps.Play();
+
         float timer = 0f;
         while (timer < duration)
         {
@@ -76,5 +84,6 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(" no rain");
         // disable rain effects
+        Destroy(ps);
     }
 }

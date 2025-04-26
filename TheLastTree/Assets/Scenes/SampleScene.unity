@@ -2906,6 +2906,7 @@ GameObject:
   - component: {fileID: 638457620}
   - component: {fileID: 638457621}
   - component: {fileID: 638457622}
+  - component: {fileID: 638457623}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3198,6 +3199,19 @@ MonoBehaviour:
   _treeLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &638457623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638030642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1263b6eaaf064264c96a3f6849e4e0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldItem: 0
 --- !u!1 &1214137076
 GameObject:
   m_ObjectHideFlags: 0
@@ -68506,6 +68520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cd1344e12e76c47b66aff17b52bcea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 519420031}
   afterSignal: 3
   _timeBeforeMin: 3
   _timeBeforeMax: 3
@@ -68513,6 +68528,7 @@ MonoBehaviour:
   _durationMax: 5
   damageInterval: 1
   _rainDamage: 5
+  rainParticles: {fileID: 5380375412779159925, guid: f5c17a83aa483a04dbc34a41398930c5, type: 3}
 --- !u!4 &1471250394
 Transform:
   m_ObjectHideFlags: 0
