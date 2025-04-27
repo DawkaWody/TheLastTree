@@ -4947,7 +4947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactPoint: {fileID: 105728702}
-  _interactRadius: 0.7
+  _interactRadius: 0.8
   _waterLayer:
     serializedVersion: 2
     m_Bits: 16

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(TreeDeco))]
@@ -14,6 +15,9 @@ public class MainTree : MonoBehaviour
     [SerializeField] private Sprite[] _growthStages;
     [SerializeField] private Vector2[] _growthDimensions;
     [SerializeField] private float[] _offsets;
+    [SerializeField] private RectTransform _wateringBarTransform;
+    [SerializeField] private Image _healthBar;
+    [SerializeField] private Image _wateringBar;
 
     private float _logTime = 1.5f;
     private float _health;
@@ -38,6 +42,15 @@ public class MainTree : MonoBehaviour
         _health = _maxHealth;
         _watering = _maxWatering;
         _growth = 0;
+
+        if (_healthBar == null)
+        {
+            GameObject healthBarContainer = GameObject.Find("TreeHealthBar");
+            foreach (Transform child in healthBarContainer.transform)
+            {
+                if (child.name.Equals("Fill")) _healthBar = child.GetComponent<Image>();
+            }
+        }
     }
 
     // Update is called once per frame
@@ -85,6 +98,9 @@ public class MainTree : MonoBehaviour
         {
             _witherTimer = 0f;
         }
+
+        _healthBar.fillAmount = _health / _maxHealth;
+        _wateringBar.fillAmount = _watering / _maxWatering;
     }
 
     private void Grow()
@@ -95,6 +111,8 @@ public class MainTree : MonoBehaviour
         _treeDeco.width = _growthDimensions[_growth].x;
         _treeDeco.height = _growthDimensions[_growth].y;
         transform.position = new Vector3(transform.position.x, transform.position.y + _offsets[_growth]);
+        _wateringBarTransform.anchoredPosition =
+            new Vector2(_wateringBarTransform.anchoredPosition.x, _wateringBarTransform.anchoredPosition.y + _offsets[_growth]);
     }
 
     public void Damage(float amount)
