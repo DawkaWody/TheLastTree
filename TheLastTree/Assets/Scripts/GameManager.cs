@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private bool _mainMusicPaused;
     private bool _rainMusicPaused;
 
+    [SerializeField] private GameObject gameOverUI;
     void Awake()
     {
         if (Instance == null)
@@ -223,5 +224,16 @@ public class GameManager : MonoBehaviour
             track.volume = Mathf.Lerp(0f, volume, elapsed / fadeDuration);
             yield return null;
         }
+    }
+    public void GameOver ()
+    {
+        isGameRunning = false;
+
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
     }
 }

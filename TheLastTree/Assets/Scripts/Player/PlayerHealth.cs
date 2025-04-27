@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] public int maxPlayerHealth = 100;
     public int currentPlayerHealth;
 
     [SerializeField] private Image healthFillImage;
@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentPlayerHealth = maxHealth;
+        currentPlayerHealth = maxPlayerHealth;
         playerInventory = GetComponent<PlayerInventory>();
         playerSprite.material = new Material(Shader.Find("Custom/2DFlash"));
     }
@@ -29,7 +29,6 @@ public class PlayerHealth : MonoBehaviour
             if (heldLeafPad != null)
             {
                 heldLeafPad.LeafPadTakeDamage(amount);
-                Debug.Log(heldLeafPad.health);
                 return;
             }
         }
@@ -47,19 +46,23 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int amount)
     {
         currentPlayerHealth += amount;
-        currentPlayerHealth = Mathf.Min(currentPlayerHealth, maxHealth);
+        currentPlayerHealth = Mathf.Min(currentPlayerHealth, maxPlayerHealth);
     }
     private void UpdateHealthBar()
     {
         if (healthFillImage != null)
         {
-            healthFillImage.fillAmount = (float)currentPlayerHealth / maxHealth;
+            healthFillImage.fillAmount = (float)currentPlayerHealth / maxPlayerHealth;
         }
     }
 
     void Die()
     {
         Debug.Log("u ded.");
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameOver();
+        }
     }
     private IEnumerator Flash()
     {
