@@ -38,7 +38,7 @@ public class Trunk : MonoBehaviour
             {
                 if (inventory.CanPickUp(itemType))
                 {
-                    inventory.PickUpItem(itemType);
+                    inventory.PickUpItem(itemType, this);
                     Use();
                 }
             }

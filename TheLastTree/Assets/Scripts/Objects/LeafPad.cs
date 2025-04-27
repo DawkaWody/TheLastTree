@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -17,7 +18,12 @@ public class LeafPad : MonoBehaviour
     private Transform _playerTransform;
 
     private bool isActive = false;
-    private bool isBeingUsed = false;
+    public bool isBeingUsed = false;
+
+    [SerializeField] private int maxHealth = 50;
+    private int currentHealth;
+
+    public int health;
 
     private Vector3 Offset;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,11 +32,13 @@ public class LeafPad : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = _idle;
         Offset = new Vector3(0, _offsetY, 0);
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
+        health = currentHealth;
         if (_inputHandler != null && _inputHandler.InteractWasPressed && isActive)
         {
             var inventory = _playerInventory;
@@ -38,7 +46,7 @@ public class LeafPad : MonoBehaviour
             {
                 if (inventory.CanPickUp(itemType))
                 {
-                    inventory.PickUpItem(itemType);
+                    inventory.PickUpItem(itemType, this);
                     Use();
                 }
             }
@@ -76,5 +84,20 @@ public class LeafPad : MonoBehaviour
         _spriteRenderer.sprite = _using;
         _spriteRenderer.sortingOrder = 1;
         isBeingUsed = true;
+    }
+
+    public void LeafPadTakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

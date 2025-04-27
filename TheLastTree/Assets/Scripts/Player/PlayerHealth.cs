@@ -23,7 +23,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (playerInventory != null && playerInventory.heldItem == ItemType.LeafPad) return;
+        if (playerInventory != null && playerInventory.heldItem == ItemType.LeafPad)
+        {
+            LeafPad heldLeafPad = playerInventory.GetHeldItem<LeafPad>();
+            if (heldLeafPad != null)
+            {
+                heldLeafPad.LeafPadTakeDamage(amount);
+                Debug.Log(heldLeafPad.health);
+                return;
+            }
+        }
 
         currentPlayerHealth -= amount;
         currentPlayerHealth = Mathf.Max(currentPlayerHealth, 0);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6642814872270657376}
   m_Layer: 0
   m_Name: LeafPad02
-  m_TagString: Untagged
+  m_TagString: LeafPad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,3 +142,5 @@ MonoBehaviour:
   _selected: {fileID: 7081413337693470496, guid: c49cbd0ef75a5ba419bb1557bac79b2e, type: 3}
   _using: {fileID: 3178026846249703408, guid: d0ef0f0094b575f479b0d6969937677d, type: 3}
   _offsetY: 0.42
+  isBeingUsed: 0
+  maxHealth: 50

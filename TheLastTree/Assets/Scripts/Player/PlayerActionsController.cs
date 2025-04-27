@@ -10,6 +10,10 @@ public class PlayerActionsController : MonoBehaviour
     [SerializeField] private LayerMask _treeLayer;
     [SerializeField] private float _waterAmount = 2f;
 
+    [SerializeField] private ParticleSystem _waterParticles;
+
+    private GameObject GatherWaterEffect;
+
     private bool _hasWater;
 
     private PlayerInputHandler _inputHandler;
@@ -45,6 +49,10 @@ public class PlayerActionsController : MonoBehaviour
         Collider2D water = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _waterLayer);
         if (water == null) return;
         Debug.Log("Water collected!");
+        Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
+        GatherWaterEffect = Instantiate(_waterParticles.gameObject, _interactPoint.position, rotation);
+        ParticleSystem _particleSystem = GatherWaterEffect.GetComponent<ParticleSystem>();
+        _particleSystem.Play();
         _hasWater = true;
     }
 
