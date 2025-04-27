@@ -51,15 +51,16 @@ public class GameManager : MonoBehaviour
             _playerHealth = player.GetComponent<PlayerHealth>();
         }
 
-        StartGame();
+        StartGame(player.transform);
     }
 
-    private void StartGame()
+    private void StartGame(Transform player)
     {
         if (MapGenerator.Instance != null)
         {
             MapGenerator.Instance.GenerateMap();
         }
+        player.position = MapGenerator.Instance.GetPlayerSpawnpoint().position;
         isGameRunning = true;
         StartCoroutine(RainCycle());
     }

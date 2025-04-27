@@ -16,6 +16,7 @@ public class MapGenerator : MonoBehaviour
     private int _mapWidth;
     private int _mapHeight;
     private bool _seg0Spawned;
+    private Transform _playerSpawnpoint;
 
     void Awake()
     {
@@ -41,8 +42,6 @@ public class MapGenerator : MonoBehaviour
             Debug.LogWarning($"Invalid map dimensions. Generator may not work as intended");
         if (_mapWidth % 1 != 0 || _mapHeight % 1 != 0)
             Debug.LogWarning("Map dimensions are floats. Generator may not work as intended");
-
-        GenerateMap();
     }
 
     public void GenerateMap()
@@ -60,11 +59,9 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        if (!_seg0Spawned)
-        {
-            Debug.Log("Segment 0 didn't generate. Regenerating the map");
-            GenerateMap();
-        }
+        if (_seg0Spawned) return;
+        Debug.Log("Segment 0 didn't generate. Regenerating the map");
+        GenerateMap();
     }
 
     private void GenerateSegment(float x, float y)
@@ -76,6 +73,18 @@ public class MapGenerator : MonoBehaviour
         if (segId == 0)
         {
             _seg0Spawned = true;
+            Transform[] spawnpoints = new Transform[4];
+            foreach (Transform child in segment.transform)
+            {
+                if (!child.name.Equals("Spawnpoints")) continue;
+                int i = 0;
+                foreach (Transform spawnpoint in child.transform)
+                {
+                    spawnpoints[i] = spawnpoint;
+                    i++;
+                }
+            }
+            _playerSpawnpoint = spawnpoints[Random.Range(0, spawnpoints.Length)];
         }
     }
 
@@ -85,6 +94,16 @@ public class MapGenerator : MonoBehaviour
         foreach (Transform segment in _mapContainer)
         {
             Destroy(segment.gameObject);
+        }
+    }
+
+    public Transform GetPlayerSpawnpoint()
+    {
+        if (_playerSpawnpoint != null) return _playerSpawnpoint;
+        else
+        {
+            Debug.LogWarning("GetPlayerSpawnpoint() called before map generation");
+            return null;
         }
     }
 }
