@@ -8,6 +8,11 @@ public enum ItemType
 public class PlayerInventory : MonoBehaviour
 {
     public ItemType heldItem = ItemType.None;
+    private SpriteRenderer _spriteRenderer;
+    void Start()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public bool CanPickUp(ItemType itemType)
     {
@@ -19,6 +24,7 @@ public class PlayerInventory : MonoBehaviour
         if (CanPickUp(itemType))
         {
             heldItem = itemType;
+            if (itemType == ItemType.LeafPad && _spriteRenderer != null) _spriteRenderer.sortingOrder = 1;
         }
     }
     /*public void DropItem()

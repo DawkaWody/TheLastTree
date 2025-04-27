@@ -70,6 +70,6 @@ public class Trunk : MonoBehaviour
     {
         _spriteRenderer.sprite = _idle;
         Instantiate(treeSap, _playerTransform.position + Offset, Quaternion.identity, _playerTransform);
-        isInteractable = false;
+        isInteractable = false;   
     }
 }

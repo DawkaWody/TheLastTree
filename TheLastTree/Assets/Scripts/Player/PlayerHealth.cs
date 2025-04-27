@@ -9,17 +9,22 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image healthFillImage;
 
     [SerializeField] private SpriteRenderer playerSprite;
+    private PlayerInventory playerInventory;
+
     [SerializeField] private float flashDuration;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentPlayerHealth = maxHealth;
+        playerInventory = GetComponent<PlayerInventory>();
         playerSprite.material = new Material(Shader.Find("Custom/2DFlash"));
     }
 
     public void TakeDamage(int amount)
     {
+        if (playerInventory != null && playerInventory.heldItem == ItemType.LeafPad) return;
+
         currentPlayerHealth -= amount;
         currentPlayerHealth = Mathf.Max(currentPlayerHealth, 0);
         StartCoroutine(Flash());
