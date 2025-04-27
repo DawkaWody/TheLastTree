@@ -57,6 +57,18 @@ public class MainTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_healthBar == null)
+        {
+            GameObject healthBarContainer = GameObject.Find("TreeHealthBar");
+            if (healthBarContainer != null)
+            {
+                foreach (Transform child in healthBarContainer.transform)
+                {
+                    if (child.name.Equals("Fill")) _healthBar = child.GetComponent<Image>();
+                }
+            }
+        }
+
         _logTimer += Time.deltaTime;
         if (_logTimer >= _logTime)
         {
@@ -100,7 +112,7 @@ public class MainTree : MonoBehaviour
             _witherTimer = 0f;
         }
 
-        _healthBar.fillAmount = _health / _maxHealth;
+        if (_healthBar != null) _healthBar.fillAmount = _health / _maxHealth;
         _wateringBar.fillAmount = _watering / _maxWatering;
     }
 
@@ -147,6 +159,6 @@ public class MainTree : MonoBehaviour
 
     private void Die()
     {
-
+        GameManager.Instance.GameOver();
     }
 }
