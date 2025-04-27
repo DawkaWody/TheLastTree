@@ -36,13 +36,15 @@ public class GameManager : MonoBehaviour
     private bool _mainMusicPaused;
     private bool _rainMusicPaused;
 
+    private GameOver _gameOver;
+
     [SerializeField] private GameObject gameOverUI;
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _gameOver = GetComponent<GameOver>();
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -229,10 +232,7 @@ public class GameManager : MonoBehaviour
     {
         isGameRunning = false;
 
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(true);
-        }
+        _gameOver.TriggerGameOverUI();
 
         Time.timeScale = 0f;
     }
