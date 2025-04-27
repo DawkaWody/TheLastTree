@@ -74,6 +74,7 @@ public class LeafPad : MonoBehaviour
     void Use()
     {
         _spriteRenderer.sprite = _using;
+        _spriteRenderer.sortingOrder = 1;
         isBeingUsed = true;
     }
 }
