@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 [RequireComponent(typeof(PlayerAnimationController))]
+[RequireComponent(typeof(PlayerInventory))]
 public class PlayerActionsController : MonoBehaviour
 {
     [SerializeField] private Transform _interactPoint;
@@ -9,23 +10,28 @@ public class PlayerActionsController : MonoBehaviour
     [SerializeField] private LayerMask _waterLayer;
     [SerializeField] private LayerMask _treeLayer;
     [SerializeField] private float _waterAmount = 2f;
+    [SerializeField] private float _treeSapAmount = 35f;
 
     [SerializeField] private ParticleSystem _waterParticles;
 
     private GameObject GatherWaterEffect;
 
     private bool _hasWater;
+    private bool _hasTreeSap;
 
     private PlayerInputHandler _inputHandler;
     private PlayerAnimationController _animationController;
+    private PlayerInventory _inventory;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _inputHandler = GetComponent<PlayerInputHandler>();
         _animationController = GetComponent<PlayerAnimationController>();
+        _inventory = GetComponent<PlayerInventory>();
 
         _hasWater = false;
+        _hasTreeSap = false;
     }
 
     // Update is called once per frame
@@ -39,9 +45,15 @@ public class PlayerActionsController : MonoBehaviour
             }
             else
             {
-                CollectWater();
+                if (_hasTreeSap) UseTreeSap();
+                else CollectWater();
             }
         }
+    }
+
+    public void OwnTreeSap()
+    {
+        _hasTreeSap = true;
     }
 
     private void CollectWater()
@@ -67,6 +79,24 @@ public class PlayerActionsController : MonoBehaviour
         _hasWater = false;
         _animationController.AnimateWatering();
         SoundManager.Instance.PlayWaterUseSfx(.4f);
+    }
+
+    private void UseTreeSap()
+    {
+        Collider2D tree = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _treeLayer);
+        if (tree == null) return;
+        Debug.Log("Tree sap used");
+        MainTree treeScript = tree.GetComponent<MainTree>();
+        treeScript.Protect(_treeSapAmount);
+        _hasTreeSap = false;
+        _inventory.ClearHeldItem();
+        foreach (Transform child in transform)
+        {
+            if (child.name.Equals("TreeSap(Clone)"))
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()

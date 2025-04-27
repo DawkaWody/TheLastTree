@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera _camera;
     public static GameManager Instance;
     private PlayerHealth _playerHealth;
+    private MainTree _mainTree;
 
     [SerializeField] private int afterSignal;
 
@@ -70,6 +71,12 @@ public class GameManager : MonoBehaviour
             MapGenerator.Instance.GenerateMap();
         }
 
+        GameObject tree = GameObject.FindWithTag("MainTree");
+        if (tree != null)
+        {
+            _mainTree = tree.GetComponent<MainTree>();
+        }
+
         player.position = MapGenerator.Instance.GetPlayerSpawnpoint().position;
         isGameRunning = true;
         StartCoroutine(RainCycle());
@@ -121,6 +128,7 @@ public class GameManager : MonoBehaviour
                 if (_playerHealth != null)
                 {
                     _playerHealth.TakeDamage(_rainDamage);
+                    _mainTree.Damage(_rainDamage);
                 }
 
                 yield return new WaitForSeconds(damageInterval);

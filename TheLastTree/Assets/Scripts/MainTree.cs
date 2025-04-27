@@ -23,6 +23,7 @@ public class MainTree : MonoBehaviour
     private float _health;
     private float _watering;
     private int _growth;
+    private float _sapHp;
 
     private float _logTimer;
     private float _growthTimer;
@@ -117,7 +118,13 @@ public class MainTree : MonoBehaviour
 
     public void Damage(float amount)
     {
-        _health -= amount;
+        if (_sapHp >= amount) _sapHp -= amount;
+        else if (_sapHp > 0)
+        {
+            _sapHp = 0f;
+            _health -= amount - _sapHp;
+        }
+        else _health -= amount;
         if (_health <= 0) Die();
     }
 
@@ -125,6 +132,12 @@ public class MainTree : MonoBehaviour
     {
         _watering += amount;
         Mathf.Clamp(_watering, 0f, _maxWatering);
+    }
+
+    public void Protect(float hp)
+    {
+        if (_sapHp > 0) return;
+        _sapHp = hp;
     }
 
     private void Die()
