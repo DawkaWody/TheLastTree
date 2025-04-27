@@ -1503,11 +1503,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 200
   _maxWatering: 10
-  _growThreshold: 1
+  _growThreshold: 6
   _witherThreshold: 3
-  _witherDamageRate: 5
-  _dehydrationRate: 3
-  _growTime: 5
+  _witherDamageRate: 0.2
+  _dehydrationRate: 5
+  _growTime: 15
   _growthStages:
   - {fileID: -8049571451551452467, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
   - {fileID: -2278315331238053400, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}

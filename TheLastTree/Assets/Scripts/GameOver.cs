@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public GameObject gameOverUI;
+    public GameObject gameWonUI;
 
     [SerializeField] private CanvasGroup gameOverCanvasGroup;
     [SerializeField] private float fadeDuration = 1f;
@@ -20,6 +21,13 @@ public class GameOver : MonoBehaviour
         StartCoroutine(FadeGameOver(0f, 1f));
         Time.timeScale = 0f;
     }
+
+    public void TriggerGameWonUI()
+    {
+        gameWonUI.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
     public void Restart()
     {
         StartCoroutine(FadeGameOver(1f, 0f));

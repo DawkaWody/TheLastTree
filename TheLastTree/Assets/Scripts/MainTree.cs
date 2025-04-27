@@ -106,7 +106,7 @@ public class MainTree : MonoBehaviour
 
     private void Grow()
     {
-        if (_growth >= _growthStages.Length - 1) return;
+        if (_growth >= _growthStages.Length - 1) Win();
         _growth++;
         _spriteRenderer.sprite = _growthStages[_growth];
         _treeDeco.width = _growthDimensions[_growth].x;
@@ -138,6 +138,11 @@ public class MainTree : MonoBehaviour
     {
         if (_sapHp > 0) return;
         _sapHp = hp;
+    }
+
+    private void Win()
+    {
+
     }
 
     private void Die()
