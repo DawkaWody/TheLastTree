@@ -43,14 +43,14 @@ ParticleSystem:
   m_GameObject: {fileID: 5052426767212536030}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 4
+  simulationSpeed: 11
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -224,7 +224,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.252314, g: 0.509434, b: 0.3126261, a: 1}
+      maxColor: {r: 0.08121216, g: 0.6886792, b: 0.3852342, a: 0.19607843}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -871,7 +871,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 35
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1326,8 +1326,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 12914
-        atime2: 55127
+        atime1: 15035
+        atime2: 48573
         atime3: 65535
         atime4: 65535
         atime5: 0
@@ -4883,7 +4883,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -5057,7 +5057,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.43787825, g: 0.754717, b: 0.51099485, a: 0.6666667}
+      maxColor: {r: 0.28034887, g: 0.7924528, b: 0.5380528, a: 0.39215687}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
