@@ -2508,6 +2508,9 @@ MonoBehaviour:
   - {fileID: -2367059758012470459, guid: da0da0cde160ebe4dbe7e7ee6981acbc, type: 3}
   - {fileID: -53862812930758735, guid: a83e3730fd7dd1946848d2d7e6fe1cf9, type: 3}
   - {fileID: -5936742390133398044, guid: 777d121fb34434d4f97c894c680ff1e3, type: 3}
+  - {fileID: -2367059758012470459, guid: 599f83a17cc255243a0a400d7546f2fc, type: 3}
+  - {fileID: -5936742390133398044, guid: a0f9bb38102e6a94489d774808817f4c, type: 3}
+  - {fileID: -5936742390133398044, guid: 805392e4361a87342b0d070ca1a87d69, type: 3}
   _segmentWidth: 8
   _segmentHeight: 8
   _mapContainer: {fileID: 1855145207}
@@ -88736,7 +88739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -983, y: 397}
+  m_AnchoredPosition: {x: -983, y: 398}
   m_SizeDelta: {x: 59, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8496614803879126651
