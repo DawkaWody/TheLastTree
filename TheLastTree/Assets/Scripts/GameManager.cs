@@ -26,9 +26,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem rainParticles;
 
+    [SerializeField] private AudioSource _mainMusic;
+    [SerializeField] private AudioSource _rainMusic;
+
     private GameObject rainEffect;
 
     private bool isGameRunning = false;
+    private bool _mainMusicPaused;
+    private bool _rainMusicPaused;
+
     void Awake()
     {
         if (Instance == null)
@@ -51,6 +57,9 @@ public class GameManager : MonoBehaviour
             _playerHealth = player.GetComponent<PlayerHealth>();
         }
 
+        _mainMusicPaused = false;
+        _rainMusicPaused = false;
+
         StartGame(player.transform);
     }
 
@@ -60,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             MapGenerator.Instance.GenerateMap();
         }
+
         player.position = MapGenerator.Instance.GetPlayerSpawnpoint().position;
         isGameRunning = true;
         StartCoroutine(RainCycle());
@@ -78,6 +88,10 @@ public class GameManager : MonoBehaviour
             float elapsed = 0f;
             Color color = darkenImage.color;
 
+            // Change music to rain and play rain sfx
+            StartCoroutine(FadeOutTrack(_mainMusic, true));
+            StartCoroutine(FadeInTrack(_rainMusic, false));
+
             warningText.gameObject.SetActive(true);
             StartCoroutine(FlashWarning(warningText));
             while (elapsed < afterSignal)
@@ -87,12 +101,16 @@ public class GameManager : MonoBehaviour
                 darkenImage.color = new Color(color.r, color.g, color.b, alpha);
                 yield return null;
             }
+
             warningText.gameObject.SetActive(false);
             StopCoroutine(FlashWarning(warningText));
 
             // apply rain effects
             Quaternion rotation = Quaternion.Euler(0f, 0f, -25f);
-            rainEffect = Instantiate(rainParticles.gameObject, _camera.transform.position + new Vector3(2, 12, 25), rotation, _camera.transform);
+            rainEffect = Instantiate(rainParticles.gameObject, _camera.transform.position + new Vector3(2, 12, 25),
+                rotation, _camera.transform);
+            
+            SoundManager.Instance.PlayRainSfx();
 
             ParticleSystem ps = rainEffect.GetComponent<ParticleSystem>();
             ps.Play();
@@ -112,6 +130,11 @@ public class GameManager : MonoBehaviour
             // disable rain effects
             ps.Stop();
             elapsed = 0f;
+            SoundManager.Instance.StopRainSfx();
+
+            // Change music back
+            StartCoroutine(FadeInTrack(_mainMusic, true));
+            StartCoroutine(FadeOutTrack(_rainMusic, false));
 
             while (elapsed < afterSignal)
             {
@@ -120,6 +143,7 @@ public class GameManager : MonoBehaviour
                 darkenImage.color = new Color(color.r, color.g, color.b, alpha);
                 yield return null;
             }
+
             Destroy(ps);
         }
     }
@@ -146,6 +170,50 @@ public class GameManager : MonoBehaviour
                 yield return null;
             }
         }
+
         warningText.color = new Color(color.r, color.g, color.b, 0f);
+    }
+
+    private IEnumerator FadeOutTrack(AudioSource track, bool mainMusic)
+    {
+        float volume = 1f;
+        float fadeDuration = 1f;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            track.volume = Mathf.Lerp(volume, 0f, elapsed / fadeDuration);
+            yield return null;
+        }
+
+        track.Pause();
+        if (mainMusic) _mainMusicPaused = true;
+        else _rainMusicPaused = true;
+    }
+
+    private IEnumerator FadeInTrack(AudioSource track, bool mainMusic)
+    {
+        if (mainMusic)
+        {
+            if (_mainMusicPaused) _mainMusic.UnPause();
+            else _mainMusic.Play();
+            _mainMusicPaused = false;
+        }
+        else
+        {
+            if (_rainMusicPaused) _rainMusic.UnPause();
+            else _rainMusic.Play();
+            _rainMusicPaused = false;
+        }
+
+        float volume = 1f;
+        float fadeDuration = 1f;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            track.volume = Mathf.Lerp(0f, volume, elapsed / fadeDuration);
+            yield return null;
+        }
     }
 }

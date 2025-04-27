@@ -53,6 +53,7 @@ public class PlayerActionsController : MonoBehaviour
         GatherWaterEffect = Instantiate(_waterParticles.gameObject, _interactPoint.position, rotation);
         ParticleSystem _particleSystem = GatherWaterEffect.GetComponent<ParticleSystem>();
         _particleSystem.Play();
+        SoundManager.Instance.PlayWaterCollectSfx();
         _hasWater = true;
     }
 
@@ -65,6 +66,7 @@ public class PlayerActionsController : MonoBehaviour
         treeScript.Water(_waterAmount);
         _hasWater = false;
         _animationController.AnimateWatering();
+        SoundManager.Instance.PlayWaterUseSfx(.4f);
     }
 
     private void OnDrawGizmosSelected()

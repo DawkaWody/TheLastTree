@@ -81,6 +81,7 @@ public class LeafPad : MonoBehaviour
     }
     void Use()
     {
+        SoundManager.Instance.PlayLeafPadCollectSfx();
         _spriteRenderer.sprite = _using;
         _spriteRenderer.sortingOrder = 1;
         isBeingUsed = true;
