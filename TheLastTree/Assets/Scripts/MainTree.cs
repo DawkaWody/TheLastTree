@@ -12,12 +12,15 @@ public class MainTree : MonoBehaviour
     [SerializeField] private float _dehydrationRate = 3f;
     [SerializeField] private float _growTime = 5f;
     [SerializeField] private Sprite[] _growthStages;
-    [SerializeField] private float[,] _growthDimensions;
+    [SerializeField] private Vector2[] _growthDimensions;
+    [SerializeField] private float[] _offsets;
 
+    private float _logTime = 1.5f;
     private float _health;
     private float _watering;
     private int _growth;
 
+    private float _logTimer;
     private float _growthTimer;
     private float _witherTimer;
     private float _dehydrationTimer;
@@ -31,15 +34,24 @@ public class MainTree : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _treeDeco = GetComponent<TreeDeco>();
 
+        _logTimer = 0f;
         _health = _maxHealth;
         _watering = _maxWatering;
         _growth = 0;
-        _growthDimensions = new float[,] { {0, 0}, {1, 2}, {2, 4} };
     }
 
     // Update is called once per frame
     void Update()
     {
+        _logTimer += Time.deltaTime;
+        if (_logTimer >= _logTime)
+        {
+            Debug.Log($"==Main tree report== Watering: {_watering} - growing: {_watering >= _growThreshold}" +
+                      $"withering: {_watering <= _witherThreshold}; Growth stage: {_growth}/{_growthStages.Length - 1};" +
+                      $"Tree health: {_health}");
+            _logTimer = 0f;
+        }
+
         _dehydrationTimer += Time.deltaTime;
         if (_dehydrationTimer >= _dehydrationRate)
         {
@@ -80,23 +92,25 @@ public class MainTree : MonoBehaviour
         if (_growth >= _growthStages.Length - 1) return;
         _growth++;
         _spriteRenderer.sprite = _growthStages[_growth];
-        _treeDeco.width = _growthDimensions[_growth, 0];
-        _treeDeco.height = _growthDimensions[_growth, 1];
+        _treeDeco.width = _growthDimensions[_growth].x;
+        _treeDeco.height = _growthDimensions[_growth].y;
+        transform.position = new Vector3(transform.position.x, transform.position.y + _offsets[_growth]);
     }
 
     public void Damage(float amount)
     {
         _health -= amount;
-        if (_health <= 0)
-        {
-            _health = 0;
-            Destroy(gameObject);
-        }
+        if (_health <= 0) Die();
     }
 
     public void Water(float amount)
     {
         _watering += amount;
         Mathf.Clamp(_watering, 0f, _maxWatering);
+    }
+
+    private void Die()
+    {
+
     }
 }

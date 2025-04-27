@@ -8,6 +8,7 @@ public class PlayerActionsController : MonoBehaviour
     [SerializeField] private float _interactRadius = 0.7f;
     [SerializeField] private LayerMask _waterLayer;
     [SerializeField] private LayerMask _treeLayer;
+    [SerializeField] private float _waterAmount = 2f;
 
     private bool _hasWater;
 
@@ -42,22 +43,20 @@ public class PlayerActionsController : MonoBehaviour
     private void CollectWater()
     {
         Collider2D water = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _waterLayer);
-        if (water != null)
-        {
-            Debug.Log("Water collected!");
-            _hasWater = true;
-        }
+        if (water == null) return;
+        Debug.Log("Water collected!");
+        _hasWater = true;
     }
 
     private void UseWater()
     {
         Collider2D tree = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _treeLayer);
-        if (tree != null)
-        {
-            Debug.Log("Tree watered");
-            _hasWater = false;
-            _animationController.AnimateWatering();
-        }
+        if (tree == null) return;
+        Debug.Log("Tree watered");
+        MainTree treeScript = tree.GetComponent<MainTree>();
+        treeScript.Water(_waterAmount);
+        _hasWater = false;
+        _animationController.AnimateWatering();
     }
 
     private void OnDrawGizmosSelected()

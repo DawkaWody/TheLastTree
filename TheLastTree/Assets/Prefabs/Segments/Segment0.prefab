@@ -1300,7 +1300,7 @@ Transform:
   m_GameObject: {fileID: 2471758227113745335}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.93, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1351,7 +1351,7 @@ SpriteRenderer:
   m_SortingLayerID: 551465503
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -259337921900976848, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
+  m_Sprite: {fileID: -8049571451551452467, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 200
   _maxWatering: 10
-  _growThreshold: 8
+  _growThreshold: 1
   _witherThreshold: 3
   _witherDamageRate: 5
   _dehydrationRate: 3
@@ -1422,6 +1422,23 @@ MonoBehaviour:
   - {fileID: -8049571451551452467, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
   - {fileID: -2278315331238053400, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
   - {fileID: -259337921900976848, guid: 1fcdf94ae4c72e042a160c854cc9a75a, type: 3}
+  - {fileID: -1865829444, guid: 0a9560e75abd6044b92bb9fded9b0a4d, type: 3}
+  - {fileID: -6489005286283933747, guid: a59a085ba18a1ea48aed4c59349bcfe7, type: 3}
+  - {fileID: -1349718751397675806, guid: 8a53007397c183f4fb13f119c475afc7, type: 3}
+  _growthDimensions:
+  - {x: 0, y: 0}
+  - {x: 1, y: 2}
+  - {x: 2, y: 4}
+  - {x: 3, y: 5.8}
+  - {x: 4, y: 8}
+  - {x: 6.3, y: 9.9}
+  _offsets:
+  - 0
+  - 1
+  - 0.94
+  - 0.81
+  - 0.75
+  - 0.67
 --- !u!114 &7137841908051123386
 MonoBehaviour:
   m_ObjectHideFlags: 0
