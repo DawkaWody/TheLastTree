@@ -118,14 +118,21 @@ public class MainTree : MonoBehaviour
 
     private void Grow()
     {
-        if (_growth >= _growthStages.Length - 1) Win();
+        if (_growth >= _growthStages.Length - 1)
+        {
+            Win();
+            return;
+        }
         _growth++;
-        _spriteRenderer.sprite = _growthStages[_growth];
-        _treeDeco.width = _growthDimensions[_growth].x;
-        _treeDeco.height = _growthDimensions[_growth].y;
-        transform.position = new Vector3(transform.position.x, transform.position.y + _offsets[_growth]);
-        _wateringBarTransform.anchoredPosition =
-            new Vector2(_wateringBarTransform.anchoredPosition.x, _wateringBarTransform.anchoredPosition.y + _offsets[_growth]);
+        if (_growth < _growthStages.Length)
+        {
+            _spriteRenderer.sprite = _growthStages[_growth];
+            _treeDeco.width = _growthDimensions[_growth].x;
+            _treeDeco.height = _growthDimensions[_growth].y;
+            transform.position = new Vector3(transform.position.x, transform.position.y + _offsets[_growth]);
+            _wateringBarTransform.anchoredPosition =
+                new Vector2(_wateringBarTransform.anchoredPosition.x, _wateringBarTransform.anchoredPosition.y + _offsets[_growth]);
+        }
     }
 
     public void Damage(float amount)
@@ -143,7 +150,7 @@ public class MainTree : MonoBehaviour
     public void Water(float amount)
     {
         _watering += amount;
-        Mathf.Clamp(_watering, 0f, _maxWatering);
+        _watering = Mathf.Clamp(_watering, 0f, _maxWatering);
     }
 
     public void Protect(float hp)
@@ -154,7 +161,8 @@ public class MainTree : MonoBehaviour
 
     private void Win()
     {
-        GameManager.Instance.GameWon();
+        if(GameManager.Instance != null) GameManager.Instance.GameWon();
+        else Debug.LogError("GameManager.Instance is null! Cannot trigger GameWon.");
     }
 
     private void Die()
