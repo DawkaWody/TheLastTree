@@ -239,21 +239,15 @@ public class GameManager : MonoBehaviour
     }*/
     public void GameOver ()
     {
-        isGameRunning = false;
-        if (_gameOver != null)
-        {
-            _gameOver.TriggerGameOverUI();
-        }
-        if (MusicManager.Instance.isMainPlaying())
-        {
-            MusicManager.Instance.FadeOutMainMusic();
-            MusicManager.Instance.FadeInRainMusic();
-        }
-
-        Time.timeScale = 0f;
+        StartCoroutine(HandleGameOver());
     }
 
     public void GameWon()
+    {
+        StartCoroutine(HandleGameWon());
+    }
+
+    private IEnumerator HandleGameWon()
     {
         isGameRunning = false;
         if (_gameOver != null)
@@ -262,8 +256,23 @@ public class GameManager : MonoBehaviour
         }
         if (MusicManager.Instance.isRainPlaying())
         {
-            MusicManager.Instance.FadeOutRainMusic();
-            MusicManager.Instance.FadeInMainMusic();
+            yield return MusicManager.Instance.FadeOutRainMusic();
+            yield return MusicManager.Instance.FadeInMainMusic();
+        }
+        Time.timeScale = 0f;
+    }
+
+    private IEnumerator HandleGameOver()
+    {
+        isGameRunning = false;
+        if (_gameOver != null)
+        {
+            _gameOver.TriggerGameWonUI();
+        }
+        if (MusicManager.Instance.isMainPlaying())
+        {
+            yield return MusicManager.Instance.FadeOutMainMusic();
+            yield return MusicManager.Instance.FadeInRainMusic();
         }
         Time.timeScale = 0f;
     }

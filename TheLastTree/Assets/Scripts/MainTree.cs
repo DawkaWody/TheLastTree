@@ -162,7 +162,6 @@ public class MainTree : MonoBehaviour
     private void Win()
     {
         if(GameManager.Instance != null) GameManager.Instance.GameWon();
-        else Debug.LogError("GameManager.Instance is null! Cannot trigger GameWon.");
     }
 
     private void Die()
