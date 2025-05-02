@@ -99,6 +99,10 @@ public class LeafPad : MonoBehaviour
 
     private void Die()
     {
+        if (_playerInventory != null)
+        {
+            _playerInventory.ClearHeldItem(ItemType.LeafPad);
+        }
         Destroy(gameObject);
     }
 }

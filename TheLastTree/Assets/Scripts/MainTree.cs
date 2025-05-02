@@ -154,7 +154,7 @@ public class MainTree : MonoBehaviour
 
     private void Win()
     {
-
+        GameManager.Instance.GameWon();
     }
 
     private void Die()

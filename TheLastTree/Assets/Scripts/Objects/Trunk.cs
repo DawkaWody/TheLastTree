@@ -69,8 +69,10 @@ public class Trunk : MonoBehaviour
     void Use()
     {
         _spriteRenderer.sprite = _idle;
-        Instantiate(treeSap, _playerTransform.position + Offset, Quaternion.identity, _playerTransform);
+
+        GameObject itemInstance = Instantiate(treeSap, _playerTransform.position + Offset, Quaternion.identity, _playerTransform);
+        _playerInventory.PickUpItem(itemType, null);
         isInteractable = false;
-        _playerTransform.GetComponent<PlayerActionsController>().OwnTreeSap();
+        //_playerTransform.GetComponent<PlayerActionsController>().OwnTreeSap();
     }
 }

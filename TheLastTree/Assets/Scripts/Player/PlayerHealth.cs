@@ -23,9 +23,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (playerInventory != null && playerInventory.heldItem == ItemType.LeafPad)
+        if (playerInventory != null && playerInventory.HasItem(ItemType.LeafPad))
         {
-            LeafPad heldLeafPad = playerInventory.GetHeldItem<LeafPad>();
+            LeafPad heldLeafPad = playerInventory.GetHeldItem<LeafPad>(ItemType.LeafPad);
             if (heldLeafPad != null)
             {
                 heldLeafPad.LeafPadTakeDamage(amount);

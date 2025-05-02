@@ -1,43 +1,52 @@
+using System.Collections.Generic;
 using UnityEngine;
 public enum ItemType
 {
     None,
     LeafPad,
+    Water,
+    TreeSap,
     Other
 }
 public class PlayerInventory : MonoBehaviour
 {
-    public ItemType heldItem;
+    private Dictionary<ItemType, MonoBehaviour> heldItems = new();
 
     private LeafPad heldLeafPad;
 
     private MonoBehaviour heldItemObject;
     public bool CanPickUp(ItemType itemType)
     {
-        return heldItem == ItemType.None || heldItem != itemType;
+        return !heldItems.ContainsKey(itemType);
     }
 
     public void PickUpItem(ItemType itemType, MonoBehaviour itemInstance)
     {
         if (CanPickUp(itemType))
         {
-            heldItem = itemType;
-            heldItemObject = itemInstance;
+            heldItems[itemType] = itemInstance;
         }
     }
 
-    public T GetHeldItem<T>() where T : MonoBehaviour
+    public T GetHeldItem<T>(ItemType itemType) where T : MonoBehaviour
     {
-        return heldItemObject as T;
+        if (heldItems.TryGetValue(itemType, out MonoBehaviour item))
+        {
+            return item as T;
+        }
+        return null;
     }
 
-    public void ClearHeldItem()
+    public void ClearHeldItem(ItemType itemType)
     {
-        heldItem = ItemType.None;
-        heldItemObject = null;
+        if (heldItems.ContainsKey(itemType))
+        {
+            heldItems.Remove(itemType);
+        }
     }
-    /*public void DropItem()
+
+    public bool HasItem(ItemType itemType)
     {
-        heldItem = ItemType.None;
-    }*/
+        return heldItems.ContainsKey(itemType);
+    }
 }

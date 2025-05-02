@@ -39,12 +39,13 @@ public class GameManager : MonoBehaviour
     private GameOver _gameOver;
 
     [SerializeField] private GameObject gameOverUI;
+
     void Awake()
     {
+        Debug.Log("GameManager Awake");
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -52,10 +53,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _gameOver = GetComponent<GameOver>();
+        _gameOver = FindAnyObjectByType<GameOver>();
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -231,9 +240,21 @@ public class GameManager : MonoBehaviour
     public void GameOver ()
     {
         isGameRunning = false;
+        if (_gameOver != null)
+        {
+            _gameOver.TriggerGameOverUI();
+        }
 
-        _gameOver.TriggerGameOverUI();
+        Time.timeScale = 0f;
+    }
 
+    public void GameWon()
+    {
+        isGameRunning = false;
+        if (_gameOver != null)
+        {
+            _gameOver.TriggerGameWonUI();
+        }
         Time.timeScale = 0f;
     }
 }

@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb8dc6f505ff7e46872cc5ec6506760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 3
   _idle: {fileID: 5188767115401433409, guid: 0a9560e75abd6044b92bb9fded9b0a4d, type: 3}
   _selected: {fileID: 6124259234553291174, guid: 5d0a12727d6bc3b4c8edfb13dcd08be3, type: 3}
   treeSap: {fileID: 1746319172750806201, guid: d57a6d1c5f024ad429aab4ff3a3c35ab, type: 3}

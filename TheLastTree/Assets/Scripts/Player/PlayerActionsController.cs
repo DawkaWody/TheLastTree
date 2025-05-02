@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandler))]
@@ -16,8 +17,8 @@ public class PlayerActionsController : MonoBehaviour
 
     private GameObject GatherWaterEffect;
 
-    private bool _hasWater;
-    private bool _hasTreeSap;
+    //private bool _hasWater;
+    //private bool _hasTreeSap;
 
     private PlayerInputHandler _inputHandler;
     private PlayerAnimationController _animationController;
@@ -30,8 +31,8 @@ public class PlayerActionsController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
         _inventory = GetComponent<PlayerInventory>();
 
-        _hasWater = false;
-        _hasTreeSap = false;
+        //_hasWater = false;
+        //_hasTreeSap = false;
     }
 
     // Update is called once per frame
@@ -39,34 +40,48 @@ public class PlayerActionsController : MonoBehaviour
     {
         if (_inputHandler.InteractWasPressed)
         {
-            if (_hasWater)
+            if (_inventory.HasItem(ItemType.Water))
             {
                 UseWater();
             }
             else
             {
-                if (_hasTreeSap) UseTreeSap();
+                if (_inventory.HasItem(ItemType.TreeSap)) UseTreeSap();
                 else CollectWater();
             }
         }
     }
 
-    public void OwnTreeSap()
+    /*public void OwnTreeSap()
     {
         _hasTreeSap = true;
-    }
+    }*/
 
     private void CollectWater()
     {
         Collider2D water = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _waterLayer);
         if (water == null) return;
+
         Debug.Log("Water collected!");
         Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
         GatherWaterEffect = Instantiate(_waterParticles.gameObject, _interactPoint.position, rotation);
         ParticleSystem _particleSystem = GatherWaterEffect.GetComponent<ParticleSystem>();
         _particleSystem.Play();
         SoundManager.Instance.PlayWaterCollectSfx();
-        _hasWater = true;
+        //_hasWater = true;
+
+        _inventory.PickUpItem(ItemType.Water, null);
+
+        StartCoroutine(DestroyParticleAfterFinish(_particleSystem));
+    }
+
+    private IEnumerator DestroyParticleAfterFinish(ParticleSystem particleSystem)
+    {
+        while (particleSystem.isPlaying)
+        {
+            yield return null;
+        }
+        Destroy(GatherWaterEffect);
     }
 
     private void UseWater()
@@ -76,9 +91,11 @@ public class PlayerActionsController : MonoBehaviour
         Debug.Log("Tree watered");
         MainTree treeScript = tree.GetComponent<MainTree>();
         treeScript.Water(_waterAmount);
-        _hasWater = false;
+        //_hasWater = false;
         _animationController.AnimateWatering();
         SoundManager.Instance.PlayWaterUseSfx(.4f);
+
+        _inventory.ClearHeldItem(ItemType.Water);
     }
 
     private void UseTreeSap()
@@ -88,8 +105,8 @@ public class PlayerActionsController : MonoBehaviour
         Debug.Log("Tree sap used");
         MainTree treeScript = tree.GetComponent<MainTree>();
         treeScript.Protect(_treeSapAmount);
-        _hasTreeSap = false;
-        _inventory.ClearHeldItem();
+        //_hasTreeSap = false;
+        _inventory.ClearHeldItem(ItemType.TreeSap);
         foreach (Transform child in transform)
         {
             if (child.name.Equals("TreeSap(Clone)"))
