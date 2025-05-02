@@ -27,14 +27,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem rainParticles;
 
-    [SerializeField] private AudioSource _mainMusic;
-    [SerializeField] private AudioSource _rainMusic;
+    //[SerializeField] private AudioSource _mainMusic;
+    //[SerializeField] private AudioSource _rainMusic;
 
     private GameObject rainEffect;
 
     private bool isGameRunning = false;
-    private bool _mainMusicPaused;
-    private bool _rainMusicPaused;
+    //private bool _mainMusicPaused;
+    //private bool _rainMusicPaused;
 
     private GameOver _gameOver;
 
@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour
             _playerHealth = player.GetComponent<PlayerHealth>();
         }
 
-        _mainMusicPaused = false;
-        _rainMusicPaused = false;
+        //_mainMusicPaused = false;
+        //_rainMusicPaused = false;
 
         StartGame(player.transform);
     }
@@ -109,8 +109,8 @@ public class GameManager : MonoBehaviour
             Color color = darkenImage.color;
 
             // Change music to rain and play rain sfx
-            StartCoroutine(FadeOutTrack(_mainMusic, true));
-            StartCoroutine(FadeInTrack(_rainMusic, false));
+            yield return StartCoroutine(MusicManager.Instance.FadeOutMainMusic());
+            yield return StartCoroutine(MusicManager.Instance.FadeInRainMusic());
 
             warningText.gameObject.SetActive(true);
             StartCoroutine(FlashWarning(warningText));
@@ -154,8 +154,8 @@ public class GameManager : MonoBehaviour
             SoundManager.Instance.StopRainSfx();
 
             // Change music back
-            StartCoroutine(FadeInTrack(_mainMusic, true));
-            StartCoroutine(FadeOutTrack(_rainMusic, false));
+            yield return StartCoroutine(MusicManager.Instance.FadeOutRainMusic());
+            yield return StartCoroutine(MusicManager.Instance.FadeInMainMusic());
 
             while (elapsed < afterSignal)
             {
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         warningText.color = new Color(color.r, color.g, color.b, 0f);
     }
 
-    private IEnumerator FadeOutTrack(AudioSource track, bool mainMusic)
+    /*private IEnumerator FadeOutTrack(AudioSource track, bool mainMusic)
     {
         float volume = 1f;
         float fadeDuration = 1f;
@@ -236,13 +236,18 @@ public class GameManager : MonoBehaviour
             track.volume = Mathf.Lerp(0f, volume, elapsed / fadeDuration);
             yield return null;
         }
-    }
+    }*/
     public void GameOver ()
     {
         isGameRunning = false;
         if (_gameOver != null)
         {
             _gameOver.TriggerGameOverUI();
+        }
+        if (MusicManager.Instance.isMainPlaying())
+        {
+            MusicManager.Instance.FadeOutMainMusic();
+            MusicManager.Instance.FadeInRainMusic();
         }
 
         Time.timeScale = 0f;
@@ -254,6 +259,11 @@ public class GameManager : MonoBehaviour
         if (_gameOver != null)
         {
             _gameOver.TriggerGameWonUI();
+        }
+        if (MusicManager.Instance.isRainPlaying())
+        {
+            MusicManager.Instance.FadeOutRainMusic();
+            MusicManager.Instance.FadeInMainMusic();
         }
         Time.timeScale = 0f;
     }

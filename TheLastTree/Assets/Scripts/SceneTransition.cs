@@ -31,6 +31,15 @@ public class SceneTransition : MonoBehaviour
         screenFade.gameObject.SetActive(true);
         yield return StartCoroutine(Fade(0f, 1f));
 
+        if (MusicManager.Instance.isRainPlaying())
+        {
+            yield return MusicManager.Instance.FadeOutRainMusic();
+        }
+        else if (MusicManager.Instance.isMainPlaying())
+        {
+            yield return MusicManager.Instance.FadeOutMainMusic();
+        }
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncLoad.isDone)
             yield return null;
@@ -39,6 +48,7 @@ public class SceneTransition : MonoBehaviour
 
         yield return StartCoroutine(Fade(1f, 0f));
         screenFade.gameObject.SetActive(false);
+        yield return StartCoroutine(MusicManager.Instance.FadeInMainMusic());
     }
 
     private IEnumerator Fade(float start, float end)
