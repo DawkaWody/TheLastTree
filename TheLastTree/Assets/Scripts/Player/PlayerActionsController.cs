@@ -18,12 +18,18 @@ public class PlayerActionsController : MonoBehaviour
 
     private GameObject GatherWaterEffect;
 
-    //private bool _hasWater;
-    //private bool _hasTreeSap;
-
     private PlayerInputHandler _inputHandler;
     private PlayerAnimationController _animationController;
     private PlayerInventory _inventory;
+    private PlayerMovementController _movementController;
+
+    [SerializeField] private float sideOffset;
+    [SerializeField] private float upOffset;
+    [SerializeField] private float downOffset;
+
+    private Vector3 _sideOffset;
+    private Vector3 _upOffset;
+    private Vector3 _downOffset;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,14 +37,19 @@ public class PlayerActionsController : MonoBehaviour
         _inputHandler = GetComponent<PlayerInputHandler>();
         _animationController = GetComponent<PlayerAnimationController>();
         _inventory = GetComponent<PlayerInventory>();
+        _movementController = GetComponent<PlayerMovementController>();
 
-        //_hasWater = false;
-        //_hasTreeSap = false;
+        _sideOffset = new Vector3(sideOffset, 0f, 0f);
+        _upOffset = new Vector3(0f, upOffset, 0f);
+        _downOffset = new Vector3(0f, -downOffset, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateInteractPointPosition();
+
+
         if (_inputHandler.InteractWasPressed)
         {
             bool usedTreeSap = false;
@@ -56,11 +67,6 @@ public class PlayerActionsController : MonoBehaviour
         }
     }
 
-    /*public void OwnTreeSap()
-    {
-        _hasTreeSap = true;
-    }*/
-
     private void CollectWater()
     {
         Collider2D water = Physics2D.OverlapCircle(_interactPoint.position, _interactRadius, _waterLayer);
@@ -72,7 +78,6 @@ public class PlayerActionsController : MonoBehaviour
         ParticleSystem _particleSystem = GatherWaterEffect.GetComponent<ParticleSystem>();
         _particleSystem.Play();
         SoundManager.Instance.PlayWaterCollectSfx();
-        //_hasWater = true;
 
         _inventory.PickUpItem(ItemType.Water, null);
 
@@ -95,7 +100,6 @@ public class PlayerActionsController : MonoBehaviour
         Debug.Log("Tree watered");
         MainTree treeScript = tree.GetComponent<MainTree>();
         treeScript.Water(_waterAmount);
-        //_hasWater = false;
         _animationController.AnimateWatering();
         SoundManager.Instance.PlayWaterUseSfx(.4f);
 
@@ -109,7 +113,6 @@ public class PlayerActionsController : MonoBehaviour
         Debug.Log("Tree sap used");
         MainTree treeScript = tree.GetComponent<MainTree>();
         treeScript.Protect(_treeSapAmount);
-        //_hasTreeSap = false;
         _inventory.ClearHeldItem(ItemType.TreeSap);
         foreach (Transform child in transform)
         {
@@ -123,5 +126,21 @@ public class PlayerActionsController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(_interactPoint.position, _interactRadius);
+    }
+
+    private void UpdateInteractPointPosition()
+    {
+        if (_movementController.IsMovingUp)
+        {
+            _interactPoint.localPosition = _upOffset;
+        }
+        else if (_movementController.IsMovingDown)
+        {
+            _interactPoint.localPosition = _downOffset;
+        }
+        else
+        {
+            _interactPoint.localPosition = new Vector3(_sideOffset.x, _sideOffset.y, _sideOffset.z);
+        }
     }
 }

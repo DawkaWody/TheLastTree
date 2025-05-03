@@ -9,6 +9,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private Vector2 _moveInput;
     private bool _facingRight;
+    public bool IsFacingRight => _facingRight;
+    public bool IsMovingUp { get; private set; }
+    public bool IsMovingDown { get; private set; }
 
     private Rigidbody2D _rigidbody;
     private PlayerInputHandler _inputHandler;
@@ -32,6 +35,7 @@ public class PlayerMovementController : MonoBehaviour
 
         _animationController.AnimateMovement(_moveInput);
         TurnCheck();
+        VerticalMovementCheck();
     }
 
     private void TurnCheck()
@@ -53,5 +57,11 @@ public class PlayerMovementController : MonoBehaviour
     {
         transform.localScale = side ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         _facingRight = side;
+    }
+
+    private void VerticalMovementCheck()
+    {
+        IsMovingUp = _moveInput.y > 0;
+        IsMovingDown = _moveInput.y < 0;
     }
 }
