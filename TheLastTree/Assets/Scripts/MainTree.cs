@@ -166,6 +166,6 @@ public class MainTree : MonoBehaviour
 
     private void Die()
     {
-        GameManager.Instance.GameOver();
+        if (GameManager.Instance != null) GameManager.Instance.GameOver();
     }
 }

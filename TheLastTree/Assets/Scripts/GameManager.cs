@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour
         isGameRunning = false;
         if (_gameOver != null)
         {
-            _gameOver.TriggerGameWonUI();
+            _gameOver.TriggerGameOverUI();
         }
         if (MusicManager.Instance.isMainPlaying())
         {
