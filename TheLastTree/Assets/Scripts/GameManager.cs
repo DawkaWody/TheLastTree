@@ -105,22 +105,25 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(timeBefore - 5);
 
             // signal for storm
-            float elapsed = 0f;
             Color color = darkenImage.color;
+
+            Coroutine darkenBefore = StartCoroutine(DarkenImage(afterSignal - 1, darkenImage.color, targetAlpha));
+
+            warningText.gameObject.SetActive(true);
+            StartCoroutine(FlashWarning(warningText));
 
             // Change music to rain and play rain sfx
             yield return StartCoroutine(MusicManager.Instance.FadeOutMainMusic());
             yield return StartCoroutine(MusicManager.Instance.FadeInRainMusic());
 
-            warningText.gameObject.SetActive(true);
-            StartCoroutine(FlashWarning(warningText));
-            while (elapsed < afterSignal)
+            yield return darkenBefore;
+            /*while (elapsed < afterSignal)
             {
                 elapsed += Time.deltaTime;
                 float alpha = Mathf.Lerp(color.a, targetAlpha, elapsed / (afterSignal - 1));
                 darkenImage.color = new Color(color.r, color.g, color.b, alpha);
                 yield return null;
-            }
+            }*/
 
             warningText.gameObject.SetActive(false);
             StopCoroutine(FlashWarning(warningText));
@@ -150,21 +153,13 @@ public class GameManager : MonoBehaviour
 
             // disable rain effects
             ps.Stop();
-            elapsed = 0f;
             SoundManager.Instance.StopRainSfx();
 
+            Coroutine darken = StartCoroutine(DarkenImage(afterSignal - 1, darkenImage.color, color.a));
             // Change music back
             yield return StartCoroutine(MusicManager.Instance.FadeOutRainMusic());
             yield return StartCoroutine(MusicManager.Instance.FadeInMainMusic());
-
-            while (elapsed < afterSignal)
-            {
-                elapsed += Time.deltaTime;
-                float alpha = Mathf.Lerp(targetAlpha, color.a, elapsed / (afterSignal - 1));
-                darkenImage.color = new Color(color.r, color.g, color.b, alpha);
-                yield return null;
-            }
-
+            yield return darken;
             Destroy(ps);
         }
     }
@@ -195,55 +190,26 @@ public class GameManager : MonoBehaviour
         warningText.color = new Color(color.r, color.g, color.b, 0f);
     }
 
-    /*private IEnumerator FadeOutTrack(AudioSource track, bool mainMusic)
+    private IEnumerator DarkenImage(float duration, Color color, float targetAlpha)
     {
-        float volume = 1f;
-        float fadeDuration = 1f;
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
+        float elapsed = 0;
+        while (elapsed < afterSignal)
         {
             elapsed += Time.deltaTime;
-            track.volume = Mathf.Lerp(volume, 0f, elapsed / fadeDuration);
+            float alpha = Mathf.Lerp(color.a, targetAlpha, elapsed / (afterSignal - 1));
+            darkenImage.color = new Color(color.r, color.g, color.b, alpha);
             yield return null;
         }
-
-        track.Pause();
-        if (mainMusic) _mainMusicPaused = true;
-        else _rainMusicPaused = true;
     }
-
-    private IEnumerator FadeInTrack(AudioSource track, bool mainMusic)
-    {
-        if (mainMusic)
-        {
-            if (_mainMusicPaused) _mainMusic.UnPause();
-            else _mainMusic.Play();
-            _mainMusicPaused = false;
-        }
-        else
-        {
-            if (_rainMusicPaused) _rainMusic.UnPause();
-            else _rainMusic.Play();
-            _rainMusicPaused = false;
-        }
-
-        float volume = 1f;
-        float fadeDuration = 1f;
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            track.volume = Mathf.Lerp(0f, volume, elapsed / fadeDuration);
-            yield return null;
-        }
-    }*/
     public void GameOver ()
     {
+        SoundManager.Instance.StopAllSfx();
         StartCoroutine(HandleGameOver());
     }
 
     public void GameWon()
     {
+        SoundManager.Instance.StopAllSfx();
         StartCoroutine(HandleGameWon());
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
@@ -69,5 +70,11 @@ public class SoundManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         _secondAudioSource.Stop();
+    }
+
+    public void StopAllSfx()
+    {
+        if (_audioSource.isPlaying) _audioSource.Stop();
+        if (_secondAudioSource.isPlaying) _secondAudioSource.Stop();
     }
 }
