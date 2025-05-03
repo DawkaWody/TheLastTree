@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 [RequireComponent(typeof(PlayerAnimationController))]
@@ -40,15 +41,18 @@ public class PlayerActionsController : MonoBehaviour
     {
         if (_inputHandler.InteractWasPressed)
         {
-            if (_inventory.HasItem(ItemType.Water))
+            bool usedTreeSap = false;
+            if (_inventory.HasItem(ItemType.TreeSap))
+            {
+                UseTreeSap();
+                usedTreeSap = true;
+            }
+            if (_inventory.HasItem(ItemType.Water) && !usedTreeSap)
             {
                 UseWater();
+                
             }
-            else
-            {
-                if (_inventory.HasItem(ItemType.TreeSap)) UseTreeSap();
-                else CollectWater();
-            }
+            else CollectWater();
         }
     }
 
